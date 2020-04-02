@@ -1,0 +1,63 @@
+﻿<Page
+    x:Class="Kontakty.Szczegoly"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Kontakty"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid x:Name="szczegoly">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="0" Grid.Row="0" >
+            <RelativePanel>
+                <Button x:Name="BackButton" Click="Back_Click" Style="{StaticResource NavigationBackButtonNormalStyle}"/>
+            </RelativePanel>
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="1">
+            <RelativePanel>
+                <TextBlock x:Name="imieBlock2" HorizontalAlignment="Left" Text="Imie:" TextWrapping="Wrap" VerticalAlignment="Top" Margin="5,0"/>
+                <TextBox x:Name="edycjaImienia" HorizontalAlignment="Left" Text="{Binding Imie, Mode=TwoWay}" RelativePanel.RightOf="imieBlock2"/>
+            </RelativePanel>
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="2">
+            <RelativePanel>
+                <TextBlock x:Name="nazwiskoBlock2" HorizontalAlignment="Left" Text="Nazwisko:" TextWrapping="Wrap" VerticalAlignment="Top" Margin="5,0"/>
+                <TextBox x:Name="edycjaNazwiska" HorizontalAlignment="Left" Text="{Binding Nazwisko, Mode=TwoWay}" RelativePanel.RightOf="nazwiskoBlock2"/>
+            </RelativePanel>
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="3">
+            <RelativePanel>
+                <TextBlock x:Name="miastoBlock2" HorizontalAlignment="Left" Text="Miasto:" TextWrapping="Wrap" VerticalAlignment="Top" Margin="5,0"/>
+                <TextBox x:Name="edycjaMiasta" HorizontalAlignment="Left" Text="{Binding Miasto, Mode=TwoWay}" RelativePanel.RightOf="miastoBlock2"/>
+            </RelativePanel>
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="4">
+            <RelativePanel>
+                <Image x:Name="edycjaZdjecia" HorizontalAlignment="Center" Height="327">
+                    <Image.Source>
+                        <BitmapImage x:Name="bi2"  UriSource="{Binding Zdjecie, Mode=TwoWay}"/>
+                    </Image.Source>
+                </Image>
+            </RelativePanel>
+        </StackPanel>
+
+    </Grid>
+</Page>
