@@ -6,6 +6,8 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -23,8 +25,6 @@ namespace Kontakty
     /// </summary>
     public sealed partial class Szczegoly : Page
     {
-        MainPage mainPage = new MainPage();
-
         public Szczegoly()
         {
             this.InitializeComponent();
@@ -33,16 +33,71 @@ namespace Kontakty
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             BackButton.IsEnabled = this.Frame.CanGoBack;
+                Osoba o = (Osoba)e.Parameter;
+                if (o.Przycisk == "szczegoly")
+                {
+                    base.OnNavigatedTo(e);
+                    var parameters = (Osoba)e.Parameter;
+                    this.DataContext = parameters;
+                    edycjaImienia.IsEnabled = false;
+                    edycjaNazwiska.IsEnabled = false;
+                    edycjaMiasta.IsEnabled = false;
+                    edycjaZdjecia.IsTapEnabled = false;
+                    przyciskZapisz.IsEnabled = false;
+                    przyciskZapisz.Visibility = Visibility.Collapsed;
+                    przyciskModyfikuj.IsEnabled = false;
+                    przyciskModyfikuj.Visibility = Visibility.Collapsed;
+                    zmienZdjecie.IsEnabled = false;
+                    zmienZdjecie.Visibility = Visibility.Collapsed;
+                }
+                else if (o.Przycisk == "dodaj")
+                {
+                    base.OnNavigatedTo(e);
+                    przyciskModyfikuj.IsEnabled = false;
+                    przyciskModyfikuj.Visibility = Visibility.Collapsed;
+                }
+                else if (o.Przycisk == "modyfikuj")
+                {
+                    base.OnNavigatedTo(e);
+                    var parameters = (Osoba)e.Parameter;
+                    this.DataContext = parameters;
+                    przyciskZapisz.IsEnabled = false;
+                    przyciskZapisz.Visibility = Visibility.Collapsed;
+                }
+            
+        }
 
-            base.OnNavigatedTo(e);
-            //ObservableCollection<Osoba> kolekcjaOsob = (ObservableCollection<Osoba>)e.Parameter;
-            var parameters = (Osoba)e.Parameter;
+        private void przyciskZapisz_Click(object sender, RoutedEventArgs e)
+        {
+            if (bi2.UriSource == null)
+            {
+                var parameters = (new Osoba(edycjaImienia.Text, edycjaNazwiska.Text, edycjaMiasta.Text));
+                parameters.Przycisk = "zapisz";
+                this.Frame.Navigate(typeof(MainPage), parameters);
+            }
+            else
+            {
+                var parameters = (new Osoba(edycjaImienia.Text, edycjaNazwiska.Text, edycjaMiasta.Text, bi2.UriSource.ToString()));
+                parameters.Przycisk = "zapisz";
+                this.Frame.Navigate(typeof(MainPage), parameters);
+            }
+            
+        }
 
-            //edycjaImienia.Text = parameters.Imie;
-            //edycjaNazwiska.Text = parameters.Nazwisko;
-            //edycjaMiasta.Text = parameters.Miasto;
-            this.DataContext = parameters;
-
+        private void przyciskModyfikuj_Click(object sender, RoutedEventArgs e)
+        {
+            if (bi2.UriSource == null)
+            {
+                var parameters = (new Osoba(edycjaImienia.Text, edycjaNazwiska.Text, edycjaMiasta.Text));
+                parameters.Przycisk = "modyfikuj";
+                this.Frame.Navigate(typeof(MainPage), parameters);
+            }
+            else
+            {
+                var parameters = (new Osoba(edycjaImienia.Text, edycjaNazwiska.Text, edycjaMiasta.Text, bi2.UriSource.ToString()));
+                parameters.Przycisk = "modyfikuj";
+                this.Frame.Navigate(typeof(MainPage), parameters);
+            }
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
@@ -66,5 +121,20 @@ namespace Kontakty
             args.Handled = true;
         }
 
+        private async void zmienZdjecie_Click(object sender, RoutedEventArgs e)
+        {
+            var picker = new Windows.Storage.Pickers.FileOpenPicker();
+            picker.FileTypeFilter.Add(".jpeg");
+            picker.FileTypeFilter.Add(".jpg");
+            picker.FileTypeFilter.Add(".png");
+
+            StorageFile file = await picker.PickSingleFileAsync();
+
+            using (IRandomAccessStream fileStream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read))
+            {
+                await bi2.SetSourceAsync(fileStream);
+                edycjaZdjecia.Source = bi2;
+            }
+        }
     }
 }

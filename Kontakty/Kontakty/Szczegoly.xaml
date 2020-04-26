@@ -7,9 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    
+    <Page.Resources>
+        <Style x:Key="RozowyBardziej" BasedOn="{StaticResource RozowyAniowy}" TargetType="Button">
+            <Setter Property="BorderBrush" Value="Green" />
+        </Style>
+    </Page.Resources>
+    
     <Grid x:Name="szczegoly">
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
@@ -20,32 +25,39 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition />
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0" Grid.Row="0" >
+            <StackPanel.Resources>
+                <Style x:Key="RozowyBardziej" BasedOn="{StaticResource NavigationBackButtonNormalStyle}" TargetType="Button">
+                    <Setter Property="Foreground" Value="BlueViolet" />
+                    <Setter Property="Background" Value="PowderBlue" />
+                </Style>
+            </StackPanel.Resources>
             <RelativePanel>
-                <Button x:Name="BackButton" Click="Back_Click" Style="{StaticResource NavigationBackButtonNormalStyle}"/>
+                <Button x:Name="BackButton" Style="{StaticResource RozowyBardziej}" Click="Back_Click"/>
             </RelativePanel>
         </StackPanel>
 
         <StackPanel Grid.Column="0" Grid.Row="1">
             <RelativePanel>
                 <TextBlock x:Name="imieBlock2" HorizontalAlignment="Left" Text="Imie:" TextWrapping="Wrap" VerticalAlignment="Top" Margin="5,0"/>
-                <TextBox x:Name="edycjaImienia" HorizontalAlignment="Left" Text="{Binding Imie, Mode=TwoWay}" RelativePanel.RightOf="imieBlock2"/>
+                <TextBox x:Name="edycjaImienia" HorizontalAlignment="Left" Text="{Binding Imie, Mode=OneWay}" RelativePanel.RightOf="imieBlock2"/>
             </RelativePanel>
         </StackPanel>
 
         <StackPanel Grid.Column="0" Grid.Row="2">
             <RelativePanel>
                 <TextBlock x:Name="nazwiskoBlock2" HorizontalAlignment="Left" Text="Nazwisko:" TextWrapping="Wrap" VerticalAlignment="Top" Margin="5,0"/>
-                <TextBox x:Name="edycjaNazwiska" HorizontalAlignment="Left" Text="{Binding Nazwisko, Mode=TwoWay}" RelativePanel.RightOf="nazwiskoBlock2"/>
+                <TextBox x:Name="edycjaNazwiska" HorizontalAlignment="Left" Text="{Binding Nazwisko, Mode=OneWay}" RelativePanel.RightOf="nazwiskoBlock2"/>
             </RelativePanel>
         </StackPanel>
 
         <StackPanel Grid.Column="0" Grid.Row="3">
             <RelativePanel>
                 <TextBlock x:Name="miastoBlock2" HorizontalAlignment="Left" Text="Miasto:" TextWrapping="Wrap" VerticalAlignment="Top" Margin="5,0"/>
-                <TextBox x:Name="edycjaMiasta" HorizontalAlignment="Left" Text="{Binding Miasto, Mode=TwoWay}" RelativePanel.RightOf="miastoBlock2"/>
+                <TextBox x:Name="edycjaMiasta" HorizontalAlignment="Left" Text="{Binding Miasto, Mode=OneWay}" RelativePanel.RightOf="miastoBlock2"/>
             </RelativePanel>
         </StackPanel>
 
@@ -53,11 +65,18 @@
             <RelativePanel>
                 <Image x:Name="edycjaZdjecia" HorizontalAlignment="Center" Height="327">
                     <Image.Source>
-                        <BitmapImage x:Name="bi2"  UriSource="{Binding Zdjecie, Mode=TwoWay}"/>
+                        <BitmapImage x:Name="bi2" UriSource="{Binding Zdjecie, Mode=OneWay}"/>
                     </Image.Source>
                 </Image>
             </RelativePanel>
         </StackPanel>
 
+        <StackPanel Grid.Column="0" Grid.Row="5">
+            <RelativePanel>
+                <Button x:Name="zmienZdjecie" Content="Wybierz zdjęcie" Click="zmienZdjecie_Click" Margin="5,0"/>
+                <Button x:Name="przyciskZapisz" Style="{StaticResource RozowyBardziej}" Content="Zapisz" Click="przyciskZapisz_Click" RelativePanel.RightOf="zmienZdjecie"/>
+                <Button x:Name="przyciskModyfikuj" Content="Modyfikuj" Click="przyciskModyfikuj_Click" RelativePanel.RightOf="zmienZdjecie"/>
+            </RelativePanel>
+        </StackPanel>
     </Grid>
 </Page>

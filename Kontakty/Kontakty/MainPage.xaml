@@ -8,49 +8,6 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Width="545">
 
-    <Page.Resources>
-        <Style x:Key="RozowyAniowy" TargetType="Button">
-            <Setter Property="BorderThickness" Value="5" />
-            <Setter Property="Foreground" Value="Black" />
-            <Setter Property="BorderBrush" Value="Black" />
-            <Setter Property="Background" >
-                <Setter.Value>
-                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                        <GradientStop Color="HotPink" Offset="0.25" />
-                        <GradientStop Color="Pink" Offset="0.75" />
-                        <GradientStop Color="LightPink" Offset="1.0" />
-                    </LinearGradientBrush>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style TargetType="Button">
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="FontSize" Value="8"/>
-            <Setter Property="Foreground" Value="DarkOliveGreen" />
-            <Setter Property="BorderBrush" Value="DarkOliveGreen" />
-            <Setter Property="Background" Value="Bisque"/>
-        </Style>
-
-        <Style TargetType="HyperlinkButton">
-            <Setter Property="FontStyle" Value="Italic"/>
-            <Setter Property="BorderThickness" Value="4" />
-            <Setter Property="Foreground" Value="Black" />
-            <Setter Property="BorderBrush" Value="White" />
-            <Setter Property="CornerRadius" Value="90"/>
-            <Setter Property="Background" Value="LightPink" />
-        </Style>
-
-        <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="Red" />
-            <Setter Property="FontFamily" Value="Constantia"/>
-        </Style>
-
-        <Style TargetType="TextBox">
-            
-        </Style>
-    </Page.Resources>
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -61,10 +18,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
+
         <StackPanel Width="Auto" Height="Auto" Grid.Column="0" Grid.RowSpan="4">
             <ListBox ItemsSource="{Binding kolekcjaOsob}" x:Name="listBoxDane" Width="Auto" Height="Auto" HorizontalAlignment="Center">
                 <ListBox.ItemTemplate>
@@ -81,7 +38,7 @@
 
         <StackPanel DataContext="{Binding kolekcjaOsob}" Grid.Column="1" Grid.Row="0">
             <RelativePanel>
-                <Image x:Name="zdjecieBlock" Height="200" Tapped="zdjecieBlock_Tapped">
+                <Image x:Name="zdjecieBlock" Height="200">
                     <Image.Source>
                         <BitmapImage x:Name="bi"  UriSource="{Binding ElementName=listBoxDane, Path=SelectedItem.Zdjecie, Mode=OneWay}"/>
                     </Image.Source>
@@ -111,14 +68,14 @@
         </StackPanel>
 
         <StackPanel DataContext="{Binding kolekcjaOsob}" Grid.Column="0" Grid.Row="4">
-            <Button x:Name="usunButton" Content="Usuń" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="usunButton_Click"/>
+            <Button x:Name="usunButton" Style="{StaticResource RozowyBardziej}" Content="Usuń" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="usunButton_Click"/>
         </StackPanel>
 
-        <StackPanel DataContext="{Binding kolekcjaOsob}" Grid.Column="1" Grid.Row="4">
-            <RelativePanel VerticalAlignment="Bottom" Height="Auto">
-                <Button x:Name="dodajButton" Style="{StaticResource RozowyAniowy}" Content="Dodaj" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="dodajButton_Click" Margin="5,0"/>
-                <HyperlinkButton x:Name="szczegolyButton" Content="Szczegóły" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" HorizontalAlignment="Center" RelativePanel.RightOf="dodajButton" Margin="5,0" RenderTransformOrigin="0.5,0.506" Click="szczegolyButton_Click"/>
-                <Button x:Name="modyfikujButton" Content="Modyfikuj" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Right" Width="86" RelativePanel.RightOf="szczegolyButton" Click="modyfikujButton_Click"/>
+        <StackPanel DataContext="{Binding kolekcjaOsob}" Grid.Column="1" Grid.Row="4" Height="Auto">
+            <RelativePanel>
+                <Button x:Name="dodajButton" Style="{StaticResource RozowyAniowy}" Content="Dodaj" Grid.Column="0" Grid.Row="4" Click="dodajButton_Click" Margin="5,0"/>
+                <Button x:Name="szczegolyButton" Template="{StaticResource MyButtonTemplate}" Content="Szczegóły" Grid.Column="1" Grid.Row="4" RelativePanel.RightOf="dodajButton" Margin="5,0" Click="szczegolyButton_Click"/>
+                <Button x:Name="modyfikujButton" Content="Modyfikuj" Grid.Column="1" Grid.Row="4" Width="86" RelativePanel.RightOf="szczegolyButton" Click="modyfikujButton_Click"/>
             </RelativePanel>
         </StackPanel>
     </Grid>

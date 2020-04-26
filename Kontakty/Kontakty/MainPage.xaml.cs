@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Navigation;
 
 //Szablon elementu Pusta strona jest udokumentowany na stronie https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x415
 
@@ -27,6 +28,7 @@ namespace Kontakty
         public MainPage()
         {
             this.InitializeComponent();
+            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             kolekcjaOsob.Add(new Osoba("Jan", "Kowalski", "Warszawa", "ms-appx:///Assets/JanKowalski.jfif"));
             kolekcjaOsob.Add(new Osoba("Ala", "Nowak", "Biała Podlaska", "ms-appx:///Assets/AlaNowak.jfif"));
             this.DataContext = this;
@@ -35,14 +37,11 @@ namespace Kontakty
 
         private void dodajButton_Click(object sender, RoutedEventArgs e)
         {
-            if (bi.UriSource == null)
-            {
-                kolekcjaOsob.Add(new Osoba(imieTextBox.Text, nazwiskoTextBox.Text, miastoTextBox.Text));
-            }
-            else
-            {
-                kolekcjaOsob.Add(new Osoba(imieTextBox.Text, nazwiskoTextBox.Text, miastoTextBox.Text, bi.UriSource.ToString()));
-            }
+            Osoba o = new Osoba();
+            o.Przycisk = "dodaj";
+            var parameters = o;
+
+            this.Frame.Navigate(typeof(Szczegoly), parameters);
         }
 
         private void usunButton_Click(object sender, RoutedEventArgs e)
@@ -52,37 +51,36 @@ namespace Kontakty
 
         private void modyfikujButton_Click(object sender, RoutedEventArgs e)
         {
-            Osoba o = kolekcjaOsob[listBoxDane.SelectedIndex];
-            o.Imie = imieTextBox.Text;
-            o.Nazwisko = nazwiskoTextBox.Text;
-            o.Miasto = miastoTextBox.Text;
-            if (bi.UriSource != null)
+            kolekcjaOsob[listBoxDane.SelectedIndex].Przycisk = "modyfikuj";
+            var parameters = kolekcjaOsob[listBoxDane.SelectedIndex];
+
+            this.Frame.Navigate(typeof(Szczegoly), parameters);
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (e.Parameter.GetType() != typeof(string))
             {
-                o.Zdjecie = bi.UriSource.ToString();
+                Osoba o = (Osoba)e.Parameter;
+                if (o.Przycisk == "zapisz")
+                {
+                    kolekcjaOsob.Add((Osoba)e.Parameter);
+                }
+                else if (o.Przycisk == "modyfikuj")
+                {
+                    var parameters = (Osoba)e.Parameter;
+                    kolekcjaOsob[listBoxDane.SelectedIndex] = parameters;
+                }
             }
         }
 
         private void szczegolyButton_Click(object sender, RoutedEventArgs e)
         {
             var parameters = kolekcjaOsob[listBoxDane.SelectedIndex];
+            parameters.Przycisk = "szczegoly";
 
             this.Frame.Navigate(typeof(Szczegoly), parameters);
-        }
-
-        private async void zdjecieBlock_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            Osoba o = kolekcjaOsob[listBoxDane.SelectedIndex];
-
-            var picker = new Windows.Storage.Pickers.FileOpenPicker();
-            picker.FileTypeFilter.Add(".jpeg");
-            picker.FileTypeFilter.Add(".jpg");
-            picker.FileTypeFilter.Add(".png");
-
-            Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
-            if (file != null)
-            {
-                 o.Zdjecie = file.Path;
-            }
         }
     }
 }

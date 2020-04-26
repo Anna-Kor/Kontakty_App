@@ -14,6 +14,7 @@ namespace Kontakty
         private string _Nazwisko;
         private string _Miasto;
         private string _Zdjecie;
+        private string _Przycisk;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -58,6 +59,21 @@ namespace Kontakty
                 _Zdjecie = value;
                 this.OnPropertyChanged();
             }
+        }
+
+        public string Przycisk
+        {
+            get { return _Przycisk; }
+            set
+            {
+                _Przycisk = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public Osoba()
+        {
+
         }
 
         public Osoba(string _imie, string _nazwisko, string _miasto)

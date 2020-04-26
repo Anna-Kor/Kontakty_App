@@ -72,7 +72,6 @@ namespace Kontakty
                 Window.Current.Activate();
             }
         }
-
         /// <summary>
         /// Wywoływane, gdy nawigacja do konkretnej strony nie powiedzie się
         /// </summary>

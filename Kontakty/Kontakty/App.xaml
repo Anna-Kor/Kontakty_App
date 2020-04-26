@@ -4,4 +4,54 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Kontakty">
 
+    <Application.Resources>
+        <Style x:Key="RozowyAniowy" TargetType="Button">
+            <Setter Property="BorderThickness" Value="5" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="FontFamily" Value="Impact"/>
+            <Setter Property="Background" >
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="HotPink" Offset="0.25" />
+                        <GradientStop Color="Pink" Offset="0.75" />
+                        <GradientStop Color="LightPink" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="RozowyBardziej" BasedOn="{StaticResource RozowyAniowy}" TargetType="Button">
+            <Setter Property="BorderBrush" Value="DeepPink" />
+        </Style>
+        
+        <Style TargetType="StackPanel">
+            <Setter Property="Background" Value="PaleGoldenrod" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="DarkOliveGreen" />
+            <Setter Property="BorderBrush" Value="DarkOliveGreen" />
+            <Setter Property="Background" Value="LightGreen"/>
+            <Setter Property="Height" Value="38"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Red" />
+            <Setter Property="FontFamily" Value="Constantia"/>
+        </Style>
+
+        <ControlTemplate x:Key="MyButtonTemplate" TargetType="Button">
+            <Grid>
+                <Border CornerRadius="90"
+                    BorderBrush="Red" 
+                    BorderThickness="3">
+                </Border>
+                <ContentPresenter/>
+            </Grid>
+        </ControlTemplate>
+    </Application.Resources>
 </Application>
